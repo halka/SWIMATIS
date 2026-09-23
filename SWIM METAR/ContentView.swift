@@ -19,6 +19,7 @@ final class ATISAppModel {
     var locationsText = ""
     var displayCount = 5
     var messages: [ATISMessage] = []
+    var resultLocationOrder: [String] = []
     var lastFetchedAt: Date?
     var hasRequested = false
     var isLoading = false
@@ -76,42 +77,53 @@ final class ATISAppModel {
         defer { isLoading = false }
 
         do {
-            let response = try await client.fetch(
-                locations: locations,
-                displayCount: displayCount,
-                credentials: credentials
-            )
-            hasRequested = true
+            var fetchedMessages: [ATISMessage] = []
+            var fetchedLocations: [String] = []
 
-            guard let result = response.errorInfo.first else {
-                throw ATISRequestError.invalidPayload("error_info が空です。")
-            }
-
-            switch result.errorCode {
-            case "0":
-                lastFetchedAt = Date()
-                messages = (response.data ?? []).flatMap { location in
-                    location.atisInfo.enumerated().map { index, text in
-                        ATISMessage(
-                            id: "\(location.location)-\(index)-\(text.hashValue)",
-                            airport: location.location,
-                            rawText: text
-                        )
-                    }
-                }
-            case "1":
-                lastFetchedAt = Date()
-                messages = []
-            default:
-                throw ATISRequestError.service(
-                    code: result.errorCode,
-                    description: result.errorDescription
+            for requestedLocation in locations {
+                let response = try await client.fetch(
+                    locations: [requestedLocation],
+                    displayCount: displayCount,
+                    credentials: credentials
                 )
+
+                guard let result = response.errorInfo.first else {
+                    throw ATISRequestError.invalidPayload("error_info が空です。")
+                }
+
+                switch result.errorCode {
+                case "0":
+                    for location in response.data ?? [] {
+                        let locationMessages = location.atisInfo.reversed().enumerated().map { index, text in
+                            ATISMessage(
+                                id: "\(location.location)-\(index)-\(text.hashValue)",
+                                airport: location.location,
+                                rawText: text
+                            )
+                        }
+                        guard !locationMessages.isEmpty else { continue }
+                        fetchedLocations.append(location.location)
+                        fetchedMessages.append(contentsOf: locationMessages)
+                    }
+                case "1", "4":
+                    continue
+                default:
+                    throw ATISRequestError.service(
+                        code: result.errorCode,
+                        description: result.errorDescription
+                    )
+                }
             }
+
+            hasRequested = true
+            lastFetchedAt = Date()
+            resultLocationOrder = fetchedLocations
+            messages = fetchedMessages
         } catch is CancellationError {
             return
         } catch {
             messages = []
+            resultLocationOrder = []
             lastFetchedAt = nil
             errorMessage = error.localizedDescription
         }
@@ -119,6 +131,7 @@ final class ATISAppModel {
 
     func clearResults() {
         messages = []
+        resultLocationOrder = []
         lastFetchedAt = nil
         hasRequested = false
         errorMessage = nil
@@ -215,19 +228,24 @@ private struct ATISHomeView: View {
     var body: some View {
         NavigationStack {
             List {
-                requestSection
+                ATISRequestSection(model: model)
 
                 if model.isLoading {
-                    loadingSection
+                    ATISLoadingSection()
                 } else if model.messages.isEmpty {
-                    emptySection
+                    ATISEmptySection(hasRequested: model.hasRequested)
                 } else {
-                    resultsSection
+                    ForEach(groupedMessages, id: \.airport) { group in
+                        AirportATISSection(
+                            airport: group.airport,
+                            messages: group.messages,
+                            fetchedAt: model.lastFetchedAt
+                        )
+                    }
                 }
             }
             .scrollBounceBehavior(.basedOnSize)
-            .navigationTitle("ATIS リクエストサービス")
-            .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle("ATIS Request Service")
             .toolbar {
                 ToolbarItemGroup(placement: .primaryAction) {
                     if !model.messages.isEmpty {
@@ -244,22 +262,21 @@ private struct ATISHomeView: View {
                         }
                     }
 
-                    Menu {
+                    Menu("設定", systemImage: "gearshape") {
                         Picker("外観", selection: $appearance) {
                             ForEach(Appearance.allCases) { option in
                                 Label(option.title, systemImage: option.systemImage)
                                     .tag(option)
                             }
                         }
-                    } label: {
-                        Label("外観", systemImage: appearance.systemImage)
-                    }
-                    .accessibilityHint("ライトモードとダークモードを切り替えます")
 
-                    Button("認証情報", systemImage: "person.badge.key") {
-                        isShowingCredentials = true
+                        Divider()
+
+                        Button("認証情報", systemImage: "person.badge.key") {
+                            isShowingCredentials = true
+                        }
                     }
-                    .accessibilityHint("SWIM WebAPIの認証情報を変更します")
+                    .accessibilityHint("外観とSWIM WebAPIの認証情報を変更します")
                 }
             }
             .preferredColorScheme(appearance.colorScheme)
@@ -281,15 +298,28 @@ private struct ATISHomeView: View {
         }
     }
 
-    private var requestSection: some View {
+    private var groupedMessages: [(airport: String, messages: [ATISMessage])] {
+        let messagesByAirport = Dictionary(grouping: model.messages, by: \.airport)
+        return model.resultLocationOrder.compactMap { airport in
+            guard let messages = messagesByAirport[airport] else { return nil }
+            return (airport: airport, messages: messages)
+        }
+    }
+}
+
+private struct ATISRequestSection: View {
+    @Bindable var model: ATISAppModel
+
+    var body: some View {
         Section {
             TextField(
-                "ICAO AIRPORT CODE. e.g. RJCH",
+                "RJCH, RJTT RJAA",
                 text: $model.locationsText,
                 axis: .vertical
             )
             .atisCodeInputBehavior()
             .accessibilityLabel("ICAO 空港コード")
+            .accessibilityHint("複数入力する場合は、カンマまたは空白で区切ります")
 
             Stepper(value: $model.displayCount, in: 1...50) {
                 LabeledContent("表示件数") {
@@ -302,56 +332,49 @@ private struct ATISHomeView: View {
             Button {
                 Task { await model.fetch() }
             } label: {
-                Text("リクエスト")
+                Text("Request")
                     .frame(maxWidth: .infinity)
             }
             .buttonStyle(.glassProminent)
             .disabled(model.isLoading || model.normalizedLocations.isEmpty)
         } header: {
+            Text("ICAO空港コードを入力してください。")
         } footer: {
-            Text("空港コードICAOで入力。複数の空港を指定する際はカンマ、空白で区切る。")
+            Text("複数の空港はカンマまたは空白で区切れます。")
         }
     }
+}
 
-    private var loadingSection: some View {
+private struct ATISLoadingSection: View {
+    var body: some View {
         Section {
             HStack(spacing: 12) {
                 ProgressView()
+                    .controlSize(.regular)
                 Text("SWIMからATISを取得中…")
             }
             .frame(maxWidth: .infinity, alignment: .center)
             .padding(.vertical, 12)
+            .accessibilityElement(children: .combine)
         }
     }
+}
 
-    private var emptySection: some View {
+private struct ATISEmptySection: View {
+    let hasRequested: Bool
+
+    var body: some View {
         Section {
             ContentUnavailableView(
-                model.hasRequested ? "該当する空港のATISはありません" : "空港を指定してください",
-                systemImage: model.hasRequested ? "tray" : "airplane.circle",
+                hasRequested ? "ATISが見つかりません" : "空港を指定してください",
+                systemImage: hasRequested ? "tray" : "airplane.circle",
                 description: Text(
-                    model.hasRequested
-                        ? "指定した条件に該当するATISはありません。"
-                        : "ICAO 空港コードを入力"
+                    hasRequested
+                        ? "指定した空港のATISは現在ありません。時間をおいて再度お試しください。"
+                        : "ICAO空港コードを入力して、ATISを取得します。"
                 )
             )
         }
-    }
-
-    private var resultsSection: some View {
-        ForEach(groupedMessages, id: \.airport) { group in
-            AirportATISSection(
-                airport: group.airport,
-                messages: group.messages,
-                fetchedAt: model.lastFetchedAt
-            )
-        }
-    }
-
-    private var groupedMessages: [(airport: String, messages: [ATISMessage])] {
-        Dictionary(grouping: model.messages, by: \.airport)
-            .map { (airport: $0.key, messages: $0.value) }
-            .sorted { $0.airport < $1.airport }
     }
 }
 
@@ -370,7 +393,7 @@ private struct AirportATISSection: View {
                         .padding(.leading, 4)
                 }
             } label: {
-                HStack(spacing: 12) {
+                HStack(spacing: 10) {
                     Image(systemName: "airplane.circle.fill")
                         .font(.title2)
                         .foregroundStyle(.blue)
@@ -420,13 +443,14 @@ private struct AirportATISSection: View {
                     }
                     .accessibilityLabel("\(airport)の操作")
                 }
-                .padding(.vertical, 4)
+                .padding(.vertical, 1)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .contentShape(Rectangle())
             }
             .tint(.blue)
             .animation(.snappy, value: isExpanded)
             .listRowSeparator(.hidden)
+            .listRowInsets(EdgeInsets(top: 5, leading: 16, bottom: 5, trailing: 16))
             .accessibilityHint(isExpanded ? "タップして情報を閉じます" : "タップして情報を表示します")
         }
     }
