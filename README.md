@@ -6,11 +6,17 @@ A SwiftUI app that retrieves ATIS for multiple airports from the SWIM Web API an
 
 [日本語](#日本語) ・ [English](#english)
 
-![RJCH、RJTT、RJCOのATIS取得結果](docs/images/swimetar-results.png)
+## スクリーンショット / Screenshots
 
-> スクリーンショットでは、入力した3空港のうち `RJCO` は撮影時点のSWIM ATIS提供対象外であるため、結果に表示されていません。対象空港はサービス側で変更される可能性があるため、アプリ内に固定リストは持たず、SWIMの応答に従います。詳しくは[SWIM portal observations](https://github.com/halka/SWIM-WebAPI-ATIS-Client/blob/main/docs/portal-observations.md#observed-selectable-aerodromes)を参照してください。
+| 初期画面 / Empty state | 結果一覧 / Results overview |
+|---|---|
+| ![ICAO空港コードの入力前](docs/images/swimetar-empty-state.png) | ![RJCH、RJTT、RJCOのリクエスト結果一覧](docs/images/swimetar-results-overview.png) |
+| RJCH（CLOSE・発行日時） / RJCH (CLOSE and issue time) | RJTT（展開表示） / RJTT (expanded) |
+| ![RJCHのCLOSE表示と発行日時付きATIS](docs/images/swimetar-results.png) | ![RJTTの展開されたATIS](docs/images/swimetar-rjtt-expanded.png) |
+
+> スクリーンショットでは、入力した3空港のうち `RJCO` は撮影時点のSWIM ATIS提供対象外であるため、結果に表示されていません。対象空港はサービス側で変更される可能性があるため、アプリ内に固定リストは持たず、SWIMの応答に従います。対象空港については、SWIMのドキュメントを参照してください。
 >
-> Of the three airports entered in the screenshot, `RJCO` does not appear in the results because it was outside the SWIM ATIS service coverage at the time of capture. Because service coverage may change, the app does not maintain a fixed allowlist and instead follows the SWIM response. See [SWIM portal observations](https://github.com/halka/SWIM-WebAPI-ATIS-Client/blob/main/docs/portal-observations.md#observed-selectable-aerodromes) for details.
+> Of the three airports entered in the screenshot, `RJCO` does not appear in the results because it was outside the SWIM ATIS service coverage at the time of capture. Because service coverage may change, the app does not maintain a fixed allowlist and instead follows the SWIM response. See SWIM for details.
 
 > [!WARNING]
 > 業務利用を前提としたアプリであり、一般向けの航空情報閲覧サービスではありません。<br>
