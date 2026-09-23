@@ -260,11 +260,15 @@ private struct ATISHomeView: View {
     @State private var isShowingCredentials = false
     @State private var isShowingClearConfirmation = false
     @State private var appearance: Appearance = .system
+    @FocusState private var isLocationFieldFocused: Bool
 
     var body: some View {
         NavigationStack {
             List {
-                ATISRequestSection(model: model)
+                ATISRequestSection(
+                    model: model,
+                    isLocationFieldFocused: $isLocationFieldFocused
+                )
 
                 if model.isLoading {
                     ATISLoadingSection()
@@ -282,6 +286,10 @@ private struct ATISHomeView: View {
                 }
             }
             .scrollBounceBehavior(.basedOnSize)
+            .scrollDismissesKeyboard(.interactively)
+            .onTapGesture {
+                isLocationFieldFocused = false
+            }
             .navigationTitle("ATIS Request Service")
             .toolbar {
                 ToolbarItemGroup(placement: .primaryAction) {
@@ -351,6 +359,7 @@ private struct ATISHomeView: View {
 
 private struct ATISRequestSection: View {
     @Bindable var model: ATISAppModel
+    let isLocationFieldFocused: FocusState<Bool>.Binding
 
     var body: some View {
         Section {
@@ -359,6 +368,7 @@ private struct ATISRequestSection: View {
                 text: $model.locationsText,
                 axis: .vertical
             )
+            .focused(isLocationFieldFocused)
             .atisCodeInputBehavior()
             .accessibilityLabel("ICAO 空港コード")
             .accessibilityHint("複数入力する場合は、カンマまたは空白で区切ります")
@@ -372,6 +382,7 @@ private struct ATISRequestSection: View {
             }
 
             Button {
+                isLocationFieldFocused.wrappedValue = false
                 Task { await model.fetch() }
             } label: {
                 Text("Request")
@@ -564,22 +575,30 @@ private struct ATISMessageRow: View {
 }
 
 private struct CredentialsView: View {
+    private enum Field: Hashable {
+        case userID
+        case password
+    }
+
     @Bindable var model: ATISAppModel
     let isInitialSetup: Bool
 
     @Environment(\.dismiss) private var dismiss
     @State private var userID = ""
     @State private var password = ""
+    @FocusState private var focusedField: Field?
 
     var body: some View {
         NavigationStack {
             Form {
                 Section {
                     TextField("登録メールアドレス", text: $userID)
+                        .focused($focusedField, equals: .userID)
                         .textContentType(.username)
                         .credentialInputBehavior()
 
                     SecureField("パスワード", text: $password)
+                        .focused($focusedField, equals: .password)
                         .textContentType(.password)
                 } header: {
                     Text("SWIM API 認証")
@@ -589,6 +608,7 @@ private struct CredentialsView: View {
 
                 Section {
                     Button {
+                        focusedField = nil
                         if model.saveCredentials(userID: userID, password: password),
                            !isInitialSetup {
                             dismiss()
@@ -605,6 +625,10 @@ private struct CredentialsView: View {
                     .tint(.indigo)
                     .disabled(userID.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || password.isEmpty)
                 }
+            }
+            .scrollDismissesKeyboard(.interactively)
+            .onTapGesture {
+                focusedField = nil
             }
             .navigationTitle(isInitialSetup ? "セットアップ" : "認証情報")
             .toolbar {
