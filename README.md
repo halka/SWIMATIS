@@ -90,18 +90,18 @@ SWIM（System Wide Information Management）は、国土交通省航空局が管
 2. Xcode で `SWIM METAR.xcodeproj` を開きます。
 3. シミュレータまたは実機でビルドして実行します。
 4. 起動時に表示される認証画面で、SWIM API のメールアドレスとパスワードを入力します。
-5. `RJTT`、`RJAA`、`RJCH` などの ICAO 空港コードを入力し、ATIS 情報を取得します。
+5. `RJTT`.`RJAA`,`RJCH` などの ICAO 空港コードを入力し、ATIS を取得します。
 
 ## Usage
 
-- Enter airport codes separated by commas, spaces, tabs, or newlines.
+- Enter airport codes separated by commas, spaces.
 - Use the stepper to control the number of ATIS entries returned.
 - Tap the action menu to copy, share, or print the currently displayed report.
 - Credentials are saved in the device Keychain and reused for future requests.
 
 ## 使い方
 
-- 空港コードはカンマ、スペース、タブ、改行で区切って入力できます。
+- 空港コードはカンマ、スペースで区切って入力できます。
 - ステッパーで表示する ATIS 件数を調整できます。
 - アクションメニューから、現在表示中のレポートをコピー、共有、印刷できます。
 - 認証情報は端末の Keychain に保存され、次回以降も再利用されます。
