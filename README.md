@@ -2,7 +2,15 @@
 
 SWIM Web API から複数空港の ATIS を取得し、発行日時順に表示する SwiftUI アプリです。
 
-A SwiftUI app that retrieves ATIS for multiple airports from the SWIM Web API and displays reports in issue-time order.
+A SwiftUI app that retrieves ATIS for multiple airports from the SWIM Web API and displays reports in issue-time 
+
+> [!WARNING]
+> 業務利用を前提としたアプリであり、一般向けの航空情報閲覧サービスではありません。<br>
+> This app targets professional aviation use and is not a public aviation information service.
+
+
+
+
 
 [日本語](#日本語) ・ [English](#english)
 
@@ -18,9 +26,6 @@ A SwiftUI app that retrieves ATIS for multiple airports from the SWIM Web API an
 >
 > Of the three airports entered in the screenshot, `RJCO` does not appear in the results because it was outside the SWIM ATIS service coverage at the time of capture. Because service coverage may change, the app does not maintain a fixed allowlist and instead follows the SWIM response. See SWIM for details.
 
-> [!WARNING]
-> 業務利用を前提としたアプリであり、一般向けの航空情報閲覧サービスではありません。<br>
-> This app targets professional aviation use and is not a public aviation information service.
 
 ## 日本語
 
