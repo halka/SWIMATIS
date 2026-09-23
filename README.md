@@ -12,15 +12,15 @@ SWIM Web API から ATIS を取得して表示する SwiftUI アプリ / A Swift
 
 ### 概要
 
-SWIMETAR は、指定した ICAO 空港コードの ATIS（Automatic Terminal Information Service）を SWIM Web API から取得し、空港ごとに整理して表示する SwiftUI アプリケーションです。SWIM Web API の利用資格を持つ利用者が、必要な ATIS を短時間で確認することを目的としています。
+SWIMETAR は、指定した ICAO 空港コードの ATIS（Automatic Terminal Information Service）を SWIM Web API から取得し、空港ごとに整理して表示する SwiftUI アプリケーションです。SWIM Web API の利用資格を持つ利用者が、必要な ATIS を短時間で確認できるようにすることを目的としています。
 
-認証情報は端末の Keychain にのみ保存され、SWIM のエンドポイント以外へ送信されることはありません。
+認証情報は端末の Keychain にのみ保存され、SWIM のエンドポイント以外には送信されません。
 
 > [!WARNING]
 >
 > 航空関係者・認定ユーザー等の業務利用を想定しており、一般市民向けの情報閲覧アプリではありません。<br>
 > 本アプリは、SWIM Web API の利用資格を有し、航空情報を業務上必要とする利用者を前提としています。<br>
-> 利用には適切な認証情報、利用目的、および情報提供者の条件を満たしていることが前提です。
+> 利用には、適切な認証情報、利用目的、および情報提供者の条件を満たしていることが前提です。
 
 ### 必要条件
 
@@ -44,11 +44,11 @@ SWIMETAR は、指定した ICAO 空港コードの ATIS（Automatic Terminal In
 ### 使い方
 
 1. 初回起動時のセットアップ画面で、SWIM API の登録メールアドレスとパスワードを入力して保存します。
-2. 入力欄に ICAO 空港コードを入力します。カンマ（`,` / `、`）、スペース、改行、タブで区切って複数指定できます。
+2. 入力欄に ICAO 空港コードを入力します。カンマ（`,`）とスペースで区切って複数指定できます。
 3. ステッパーで 1 空港あたりの表示件数（1〜50）を調整します。
 4. `Request` をタップして ATIS を取得します。
 5. 空港セクション右側のメニューから、その空港のレポートを共有（iOS / iPadOS ではコピー・印刷も）できます。
-6. ツールバーのメニューから、結果の再取得・クリア、外観の変更、認証情報の更新が行えます。
+6. ツールバーのメニューから、結果の再取得・クリア、外観の変更、認証情報の更新ができます。
 
 存在しない空港コードや ATIS が無い空港は、エラーにせずスキップされます。すべての空港で結果が得られない場合は、その旨が画面に表示されます。
 
@@ -116,7 +116,7 @@ Credentials are stored only in the device Keychain and are never sent anywhere o
 ### Usage
 
 1. On first launch, enter and save your SWIM API email address and password in the setup screen.
-2. Enter ICAO airport codes in the text field. Separate multiple codes with commas (`,` / `、`), spaces, newlines, or tabs.
+2. Enter ICAO airport codes in the text field. Separate multiple codes with commas (`,`) or spaces.
 3. Use the stepper to set the number of reports per airport (1–50).
 4. Tap `Request` to retrieve ATIS data.
 5. Use the menu on the right of each airport section to share that airport's report (copy and print are also available on iOS / iPadOS).
