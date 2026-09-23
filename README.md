@@ -1,32 +1,48 @@
 # SWIMETAR
 
-SWIMETAR is a SwiftUI app for retrieving ATIS (Automatic Terminal Information Service) reports from the SWIM Web API for specified ICAO airport codes.
+SWIMETAR is a SwiftUI application for retrieving and displaying ATIS (Automatic Terminal Information Service) information from the SWIM Web API for specified ICAO airport codes.
 
-SWIMETAR は、指定した ICAO 空港コードの ATIS（Automatic Terminal Information Service）を SWIM Web API から取得して表示する SwiftUI アプリです。
+This application is intended for authorized users who have valid SWIM Web API credentials and a legitimate operational need to access aeronautical information. It is not a public information service for general consumers, and use by the general public is not expected or supported.
 
-SWIM (System Wide Information Management) is a civil aviation information-sharing framework operated by the Civil Aviation Bureau of the Ministry of Land, Infrastructure, Transport and Tourism. It provides standardized access to aeronautical and weather information, including airport operational status, flight information, and other data used by aviation stakeholders. This app focuses on ATIS delivered through the SWIM Web API.
+SWIMETAR は、指定した ICAO 空港コードに対応する ATIS（Automatic Terminal Information Service）を、SWIM Web API から取得して表示するための SwiftUI アプリケーションです。
 
-SWIM（System Wide Information Management）とは、国土交通省航空局が運用する航空情報の共有基盤です。空港運航情報、気象情報、飛行情報などの航空関連データを標準化された方式で提供し、航空関係者が安全かつ効率的に情報を利用できるようにする仕組みです。SWIMETAR は、この SWIM Web API を通じて ATIS を取得し、簡単に確認できるようにしたアプリです。
+本アプリは、SWIM Web API の利用資格を有し、航空情報を業務上必要とする利用者を前提としております。一般市民向けの公開サービスではなく、一般の方が利用することを想定していません。利用には、当該情報提供機関の定める認証・利用条件を満たしたうえで、適切な目的に基づいて使用する必要があります。
+
+## About SWIM
+
+SWIM (System Wide Information Management) is an information-sharing framework for aviation data managed by the Civil Aviation Bureau of the Ministry of Land, Infrastructure, Transport and Tourism. It provides standardized access to airport operational information, weather information, flight information, and other relevant aeronautical data used by aviation stakeholders.
+
+SWIMETAR is designed to help authorized users quickly review ATIS messages and related operational information through the SWIM Web API.
+
+## SWIM について
+
+SWIM（System Wide Information Management）は、国土交通省航空局が管理する航空情報の共有基盤です。空港運航情報、気象情報、飛行情報など、航空関係者が安全かつ効率的に利用するための各種データを標準化された方式で提供します。
+
+SWIMETAR は、認可された利用者が SWIM Web API を通じて ATIS 情報や関連する運航情報を短時間で確認できるようにすることを目的としています。
+
+> 重要: 本アプリは一般市民向けの情報閲覧アプリではありません。
+> 利用には適切な認証情報、利用目的、及び情報提供者の条件を満たしていることが前提です。
+> 会社員・航空関係者・認定ユーザー等の業務利用を想定しており、一般向けの公開情報提供サービスではありません。
 
 ## Features
 
 - Enter one or more ICAO airport codes
-- Fetch the latest ATIS information from SWIM
+- Retrieve the latest ATIS information from SWIM
 - View recent ATIS messages grouped by airport
-- Adjust the number of messages to display
+- Adjust the number of messages displayed
 - Copy, share, or print ATIS reports
-- Store SWIM credentials locally on the device using Keychain
+- Save SWIM credentials locally on the device using Keychain
 - Built with SwiftUI for Apple platforms
 
 ## 機能
 
 - 1つ以上の ICAO 空港コードを入力できる
 - SWIM から最新の ATIS 情報を取得できる
-- 空港ごとに最近の ATIS メッセージを表示できる
+- 空港ごとに直近の ATIS メッセージを表示できる
 - 表示件数を調整できる
 - ATIS レポートをコピー、共有、印刷できる
-- SWIM の認証情報を端末の Keychain に保存できる
-- Apple プラットフォーム向けに SwiftUI で開発されている
+- SWIM の認証情報を端末の Keychain に安全に保存できる
+- Apple プラットフォーム向けに SwiftUI で構築されている
 
 ## Supported Platforms
 
@@ -45,12 +61,14 @@ SWIM（System Wide Information Management）とは、国土交通省航空局が
 - Xcode 26 or later
 - An Apple device or Mac capable of running the project
 - Valid SWIM Web API credentials
+- Appropriate authorization and compliance with the applicable usage conditions
 
 ## 必要条件
 
 - Xcode 26 以降
 - アプリを実行できる Apple デバイスまたは Mac
-- 有効な SWIM Web API の認証情報
+- 有効な SWIM Web API 認証情報
+- 利用に必要な権限および適用される利用条件への適合
 
 ## Getting Started
 
@@ -62,37 +80,50 @@ SWIM（System Wide Information Management）とは、国土交通省航空局が
 2. Open `SWIM METAR.xcodeproj` in Xcode.
 3. Build and run the app on a simulator or device.
 4. Enter your SWIM API email and password when prompted.
-5. Add ICAO airport codes such as `RJTT`, `RJAA`, or `RJCH` and fetch ATIS.
+5. Add ICAO airport codes such as `RJTT`, `RJAA`, or `RJCH` and retrieve ATIS information.
 
 ## はじめ方
 
-1. リポジトリをクローンする:
+1. リポジトリをクローンします。
    ```bash
    git clone https://github.com/halka/SWIMETAR.git
    cd SWIMETAR
    ```
-2. Xcode で `SWIM METAR.xcodeproj` を開く。
-3. シミュレータまたは実機でビルドして実行する。
-4. 起動時に表示される画面で SWIM API のメールアドレスとパスワードを入力する。
-5. `RJTT`、`RJAA`、`RJCH` などの ICAO 空港コードを入力して ATIS を取得する。
+2. Xcode で `SWIM METAR.xcodeproj` を開きます。
+3. シミュレータまたは実機でビルドして実行します。
+4. 起動時に表示される認証画面で、SWIM API のメールアドレスとパスワードを入力します。
+5. `RJTT`、`RJAA`、`RJCH` などの ICAO 空港コードを入力し、ATIS 情報を取得します。
 
 ## Usage
 
 - Enter airport codes separated by commas, spaces, tabs, or newlines.
-- Use the stepper to control how many ATIS entries are returned.
+- Use the stepper to control the number of ATIS entries returned.
 - Tap the action menu to copy, share, or print the currently displayed report.
 - Credentials are saved in the device Keychain and reused for future requests.
 
 ## 使い方
 
-- 空港コードはカンマ、スペース、タブ、改行で区切って入力できる。
-- ステッパーで表示する ATIS 件数を調整できる。
-- アクションメニューから、現在表示中のレポートをコピー、共有、印刷できる。
-- 認証情報は端末の Keychain に保存され、次回以降も再利用される。
+- 空港コードはカンマ、スペース、タブ、改行で区切って入力できます。
+- ステッパーで表示する ATIS 件数を調整できます。
+- アクションメニューから、現在表示中のレポートをコピー、共有、印刷できます。
+- 認証情報は端末の Keychain に保存され、次回以降も再利用されます。
+
+## Screenshots
+
+The following sections are reserved for application screenshots and explanatory images. They will be added as the app interface and usage flow are finalized.
+
+## スクリーンショット
+
+以下のセクションは、アプリの画面イメージや操作説明用の画像を掲載するためのスペースです。アプリの画面構成と利用フローが固まった段階で、画像を追加する予定です。
+
+- 画面1: 空港コード入力画面
+- 画面2: ATIS 一覧表示画面
+- 画面3: 共有・印刷・コピー操作メニュー
+- 画面4: 認証情報の保存状態と利用画面
 
 ## Project Structure
 
-- `SWIM METAR/` — app source code
+- `SWIM METAR/` — application source code
 - `SWIM METAR.xcodeproj/` — Xcode project files
 - `README.md` — project documentation
 - `LICENSE` — MIT license
