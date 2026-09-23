@@ -71,8 +71,8 @@ struct ATISMessage: Identifiable {
         return firstLine?.split(separator: " ").last.map(String.init)
     }
 
-    func issuedAt(relativeTo referenceDate: Date) -> Date? {
-        guard let timestamp = rawText
+    var issueTimeGroup: String? {
+        rawText
             .split(whereSeparator: \.isWhitespace)
             .map({ $0.trimmingCharacters(in: .punctuationCharacters) })
             .first(where: { token in
@@ -80,7 +80,31 @@ struct ATISMessage: Identifiable {
                     && token.last == "Z"
                     && token.dropLast().allSatisfy(\.isNumber)
             })
-        else {
+    }
+
+    var isCloseMessage: Bool {
+        Self.isCloseText(rawText)
+    }
+
+    static func isCloseText(_ text: String) -> Bool {
+        let lines = text
+            .split(whereSeparator: \.isNewline)
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines).uppercased() }
+            .filter { !$0.isEmpty }
+
+        guard lines.count == 2, lines[1] == "CLOSE" else {
+            return false
+        }
+
+        let heading = lines[0].split(whereSeparator: \.isWhitespace)
+        return heading.count == 2
+            && heading[0] == "ATIS"
+            && heading[1].count == 4
+            && heading[1].allSatisfy(\.isLetter)
+    }
+
+    func issuedAt(relativeTo referenceDate: Date) -> Date? {
+        guard let timestamp = issueTimeGroup else {
             return nil
         }
 

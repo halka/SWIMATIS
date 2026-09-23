@@ -1,8 +1,16 @@
-# SWIMETAR
+# SWIM METAR
 
-SWIM Web API から ATIS を取得して表示する SwiftUI アプリ / A SwiftUI app that retrieves and displays ATIS from the SWIM Web API.
+SWIM Web API から複数空港の ATIS を取得し、発行日時順に表示する SwiftUI アプリです。
+
+A SwiftUI app that retrieves ATIS for multiple airports from the SWIM Web API and displays reports in issue-time order.
 
 [日本語](#日本語) ・ [English](#english)
+
+![RJCH、RJTT、RJCOのATIS取得結果](docs/images/swimetar-results.png)
+
+> スクリーンショットでは、入力した3空港のうち `RJCO` は撮影時点のSWIM ATIS提供対象外であるため、結果に表示されていません。対象空港はサービス側で変更される可能性があるため、アプリ内に固定リストは持たず、SWIMの応答に従います。詳しくは[SWIM portal observations](https://github.com/halka/SWIM-WebAPI-ATIS-Client/blob/main/docs/portal-observations.md#observed-selectable-aerodromes)を参照してください。
+>
+> Of the three airports entered in the screenshot, `RJCO` does not appear in the results because it was outside the SWIM ATIS service coverage at the time of capture. Because service coverage may change, the app does not maintain a fixed allowlist and instead follows the SWIM response. See [SWIM portal observations](https://github.com/halka/SWIM-WebAPI-ATIS-Client/blob/main/docs/portal-observations.md#observed-selectable-aerodromes) for details.
 
 > [!WARNING]
 > 業務利用を前提としたアプリであり、一般向けの航空情報閲覧サービスではありません。<br>
@@ -14,13 +22,7 @@ SWIM Web API から ATIS を取得して表示する SwiftUI アプリ / A Swift
 
 SWIMETAR は、指定した ICAO 空港コードの ATIS（Automatic Terminal Information Service）を SWIM Web API から取得し、空港ごとに整理して表示する SwiftUI アプリケーションです。SWIM Web API の利用資格を持つ利用者が、必要な ATIS を短時間で確認できるようにすることを目的としています。
 
-認証情報は端末の Keychain にのみ保存され、SWIM のエンドポイント以外には送信されません。
-
-> [!WARNING]
->
-> 航空関係者・認定ユーザー等の業務利用を想定しており、一般市民向けの情報閲覧アプリではありません。<br>
-> 本アプリは、SWIM Web API の利用資格を有し、航空情報を業務上必要とする利用者を前提としています。<br>
-> 利用には、適切な認証情報、利用目的、および情報提供者の条件を満たしていることが前提です。
+認証情報は端末の Keychain にのみ保存され、認証とATIS取得のためにSWIMのエンドポイントへ送信されます。
 
 ### 必要条件
 
@@ -33,8 +35,9 @@ SWIMETAR は、指定した ICAO 空港コードの ATIS（Automatic Terminal In
 
 - ICAO 空港コードを複数指定して ATIS を取得（4 文字の英字のみを有効なコードとして扱い、重複は自動的に除外）
 - 1 空港あたりの取得件数を 1〜50 件の範囲で指定（初期値 5 件）
-- 空港ごとにセクション分けし、新しい ATIS から順に表示
-- ATIS 本文から Information 記号を抽出して見出しに表示
+- 空港ごとにセクション分けし、本文の発行日時（`DDHHMMZ`）を基準に新しい ATIS から順に表示
+- ATIS 本文から Information 記号と発行日時を抽出して見出しに表示
+- `ATIS <ICAOコード>` / `CLOSE` の応答は本文を省略し、空港見出しに `CLOSE` と表示
 - 空港単位でのレポートの共有（コピーと印刷は iOS / iPadOS のみ）
 - 取得結果の再取得・一括クリア
 - 外観（システム設定 / ライト / ダーク）の切り替え
@@ -50,7 +53,7 @@ SWIMETAR は、指定した ICAO 空港コードの ATIS（Automatic Terminal In
 5. 空港セクション右側のメニューから、その空港のレポートを共有（iOS / iPadOS ではコピー・印刷も）できます。
 6. ツールバーのメニューから、結果の再取得・クリア、外観の変更、認証情報の更新ができます。
 
-存在しない空港コードや ATIS が無い空港は、エラーにせずスキップされます。すべての空港で結果が得られない場合は、その旨が画面に表示されます。
+存在しない空港コードや ATIS が無い空港は、エラーにせずスキップされます。すべての空港で結果が得られない場合は、その旨が画面に表示されます。運用休止を示す `CLOSE` 応答は、空港コードの横に状態として表示されます。
 
 ### 対応プラットフォーム
 
@@ -73,6 +76,7 @@ SWIMETAR は、指定した ICAO 空港コードの ATIS（Automatic Terminal In
 
 - ログイン API（`/swim/webapi/login`）で認証し、取得した `MSMSI` / `MSMAI` セッション Cookie を ATIS 取得リクエストに付与します。
 - ATIS は空港ごとに 1 リクエストずつ取得し、`error_info` のコードに応じて結果の採用・スキップ・エラー表示を切り替えます。
+- 本文の `DDHHMMZ` をUTCの発行日時として解釈し、月またぎを考慮して新しい順に並べます。日時を解釈できないデータは末尾に表示します。
 - セッションは毎回の取得時に取り直し、`URLSession` は ephemeral 構成のため Cookie は端末に永続化されません。
 - HTML が返された場合や想定外の JSON 構造の場合は、認証切れ、または応答形式の不一致として扱います。
 
@@ -86,13 +90,7 @@ SWIM（System Wide Information Management）は、国土交通省航空局が管
 
 SWIMETAR is a SwiftUI application that retrieves ATIS (Automatic Terminal Information Service) reports from the SWIM Web API for the ICAO airport codes you specify and presents them grouped by airport. It is intended for users who hold valid SWIM Web API access and need quick operational access to ATIS data.
 
-Credentials are stored only in the device Keychain and are never sent anywhere other than the SWIM endpoints.
-
-> [!WARNING]
->
-> This app is intended for professional use by aviation personnel and authorized users. It is not designed for general public access to aviation information.<br>
-> The app assumes the user holds valid SWIM Web API access and has a legitimate operational need for the data.<br>
-> Appropriate authentication, usage purpose, and provider conditions are required before use.
+Credentials are stored only in the device Keychain and are sent to the SWIM endpoints solely for authentication and ATIS retrieval.
 
 ### Requirements
 
@@ -105,8 +103,9 @@ Credentials are stored only in the device Keychain and are never sent anywhere o
 
 - Request ATIS for multiple ICAO airport codes at once (only four-letter alphabetic codes are accepted; duplicates are removed automatically)
 - Choose how many reports to retrieve per airport, from 1 to 50 (default 5)
-- Group results into per-airport sections, newest report first
-- Extract the information code from each report and show it as a row heading
+- Group results into per-airport sections and sort them newest first using the `DDHHMMZ` issue time in each report
+- Extract the information code and issue time from each report and show both in the row heading
+- Suppress `ATIS <ICAO code>` / `CLOSE` response bodies and show `CLOSE` beside the airport code instead
 - Share a per-airport report (copy and print are available on iOS / iPadOS only)
 - Re-run the last request or clear all results
 - Switch appearance between system, light, and dark
@@ -122,7 +121,7 @@ Credentials are stored only in the device Keychain and are never sent anywhere o
 5. Use the menu on the right of each airport section to share that airport's report (copy and print are also available on iOS / iPadOS).
 6. Use the toolbar menus to refresh or clear results, change the appearance, or update stored credentials.
 
-Unknown airport codes and airports without ATIS data are skipped rather than treated as failures. If no airport returns data, the app shows an empty-state message instead.
+Unknown airport codes and airports without ATIS data are skipped rather than treated as failures. If no airport returns data, the app shows an empty-state message instead. A `CLOSE` response is represented as a status beside the airport code.
 
 ### Supported Platforms
 
@@ -145,12 +144,17 @@ Unknown airport codes and airports without ATIS data are skipped rather than tre
 
 - The app authenticates against the login API (`/swim/webapi/login`) and attaches the returned `MSMSI` / `MSMAI` session cookies to the ATIS request.
 - ATIS data is requested one airport at a time, and the `error_info` code determines whether a result is used, skipped, or surfaced as an error.
+- The app interprets `DDHHMMZ` as a UTC issue time, accounts for month boundaries, and sorts reports newest first. Reports whose time cannot be parsed appear last.
 - A fresh session is established for every fetch, and the ephemeral `URLSession` configuration means cookies are never persisted on the device.
 - HTML responses or unexpected JSON structures are reported as an expired session or a payload mismatch.
 
 ### About SWIM
 
 SWIM (System Wide Information Management) is an information-sharing framework for aviation data managed by the Civil Aviation Bureau of the Ministry of Land, Infrastructure, Transport and Tourism. It supports the distribution of operational, meteorological, and flight-related information needed by aviation stakeholders in the course of their work.
+
+## 関連プロジェクト / Related Project
+
+- [SWIM WebAPI ATIS Client](https://github.com/halka/SWIM-WebAPI-ATIS-Client/) — 国土交通省航空局SWIMのATIS Information Request Service（`FLV402001`）を利用するTypeScriptクライアント。A TypeScript client for the Japanese MLIT SWIM ATIS Information Request Service.
 
 ## Project Structure
 

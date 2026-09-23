@@ -20,6 +20,7 @@ final class ATISAppModel {
     var displayCount = 5
     var messages: [ATISMessage] = []
     var resultLocationOrder: [String] = []
+    var closedLocations: Set<String> = []
     var lastFetchedAt: Date?
     var hasRequested = false
     var isLoading = false
@@ -79,6 +80,8 @@ final class ATISAppModel {
         do {
             var fetchedMessages: [ATISMessage] = []
             var fetchedLocations: [String] = []
+            var fetchedClosedLocations: Set<String> = []
+            let referenceDate = Date()
 
             for requestedLocation in locations {
                 let response = try await client.fetch(
@@ -94,16 +97,46 @@ final class ATISAppModel {
                 switch result.errorCode {
                 case "0":
                     for location in response.data ?? [] {
-                        let locationMessages = location.atisInfo.reversed().enumerated().map { index, text in
-                            ATISMessage(
-                                id: "\(location.location)-\(index)-\(text.hashValue)",
-                                airport: location.location,
-                                rawText: text
-                            )
+                        let isClosed = location.atisInfo.contains {
+                            ATISMessage.isCloseText($0)
                         }
-                        guard !locationMessages.isEmpty else { continue }
+                        let locationMessages = location.atisInfo
+                            .enumerated()
+                            .map { index, text in
+                                let message = ATISMessage(
+                                    id: "\(location.location)-\(index)-\(text.hashValue)",
+                                    airport: location.location,
+                                    rawText: text
+                                )
+                                return (
+                                    sourceIndex: index,
+                                    message: message,
+                                    issuedAt: message.issuedAt(relativeTo: referenceDate)
+                                )
+                            }
+                            .filter { !$0.message.isCloseMessage }
+                            .sorted { first, second in
+                                switch (first.issuedAt, second.issuedAt) {
+                                case let (firstDate?, secondDate?):
+                                    if firstDate == secondDate {
+                                        return first.sourceIndex < second.sourceIndex
+                                    }
+                                    return firstDate > secondDate
+                                case (_?, nil):
+                                    return true
+                                case (nil, _?):
+                                    return false
+                                case (nil, nil):
+                                    return first.sourceIndex < second.sourceIndex
+                                }
+                            }
+                            .map(\.message)
+                        guard !locationMessages.isEmpty || isClosed else { continue }
                         fetchedLocations.append(location.location)
                         fetchedMessages.append(contentsOf: locationMessages)
+                        if isClosed {
+                            fetchedClosedLocations.insert(location.location)
+                        }
                     }
                 case "1", "4":
                     continue
@@ -119,11 +152,13 @@ final class ATISAppModel {
             lastFetchedAt = Date()
             resultLocationOrder = fetchedLocations
             messages = fetchedMessages
+            closedLocations = fetchedClosedLocations
         } catch is CancellationError {
             return
         } catch {
             messages = []
             resultLocationOrder = []
+            closedLocations = []
             lastFetchedAt = nil
             errorMessage = error.localizedDescription
         }
@@ -132,6 +167,7 @@ final class ATISAppModel {
     func clearResults() {
         messages = []
         resultLocationOrder = []
+        closedLocations = []
         lastFetchedAt = nil
         hasRequested = false
         errorMessage = nil
@@ -232,13 +268,14 @@ private struct ATISHomeView: View {
 
                 if model.isLoading {
                     ATISLoadingSection()
-                } else if model.messages.isEmpty {
+                } else if model.messages.isEmpty && model.closedLocations.isEmpty {
                     ATISEmptySection(hasRequested: model.hasRequested)
                 } else {
                     ForEach(groupedMessages, id: \.airport) { group in
                         AirportATISSection(
                             airport: group.airport,
                             messages: group.messages,
+                            isClosed: group.isClosed,
                             fetchedAt: model.lastFetchedAt
                         )
                     }
@@ -298,11 +335,16 @@ private struct ATISHomeView: View {
         }
     }
 
-    private var groupedMessages: [(airport: String, messages: [ATISMessage])] {
+    private var groupedMessages: [
+        (airport: String, messages: [ATISMessage], isClosed: Bool)
+    ] {
         let messagesByAirport = Dictionary(grouping: model.messages, by: \.airport)
-        return model.resultLocationOrder.compactMap { airport in
-            guard let messages = messagesByAirport[airport] else { return nil }
-            return (airport: airport, messages: messages)
+        return model.resultLocationOrder.map { airport in
+            (
+                airport: airport,
+                messages: messagesByAirport[airport] ?? [],
+                isClosed: model.closedLocations.contains(airport)
+            )
         }
     }
 }
@@ -381,6 +423,7 @@ private struct ATISEmptySection: View {
 private struct AirportATISSection: View {
     let airport: String
     let messages: [ATISMessage]
+    let isClosed: Bool
     let fetchedAt: Date?
 
     @State private var isExpanded = true
@@ -400,9 +443,17 @@ private struct AirportATISSection: View {
                         .accessibilityHidden(true)
 
                     VStack(alignment: .leading, spacing: 2) {
-                        Text(airport)
-                            .font(.title2.weight(.bold))
-                            .foregroundStyle(.blue)
+                        HStack(spacing: 8) {
+                            Text(airport)
+                                .font(.title2.weight(.bold))
+                                .foregroundStyle(.blue)
+
+                            if isClosed {
+                                Text("CLOSE")
+                                    .font(.headline.weight(.bold))
+                                    .foregroundStyle(.red)
+                            }
+                        }
 
                         if let fetchedAt {
                             Text(
@@ -490,8 +541,16 @@ private struct ATISMessageRow: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             if let informationCode = message.informationCode {
-                Text("Information \(informationCode)")
-                    .font(.headline)
+                HStack(spacing: 8) {
+                    Text("Information \(informationCode)")
+
+                    if let issueTimeGroup = message.issueTimeGroup {
+                        Text(issueTimeGroup)
+                            .foregroundStyle(.secondary)
+                            .monospacedDigit()
+                    }
+                }
+                .font(.headline)
             }
 
             Text(message.rawText)
