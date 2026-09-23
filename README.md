@@ -1,12 +1,20 @@
 # SWIMETAR
 
+SWIM Web API から ATIS を取得して表示する SwiftUI アプリ / A SwiftUI app that retrieves and displays ATIS from the SWIM Web API.
+
+[日本語](#日本語) ・ [English](#english)
+
+> [!WARNING]
+> 業務利用を前提としたアプリであり、一般向けの航空情報閲覧サービスではありません。<br>
+> This app targets professional aviation use and is not a public aviation information service.
+
 ## 日本語
 
 ### 概要
 
-SWIMETAR は、指定した ICAO 空港コードに対応する ATIS（Automatic Terminal Information Service）を、SWIM Web API から取得して表示するための SwiftUI アプリケーションです。
+SWIMETAR は、指定した ICAO 空港コードの ATIS（Automatic Terminal Information Service）を SWIM Web API から取得し、空港ごとに整理して表示する SwiftUI アプリケーションです。SWIM Web API の利用資格を持つ利用者が、必要な ATIS を短時間で確認することを目的としています。
 
-認可された利用者が SWIM Web API を通じて ATIS を短時間で確認できるようにすることを目的としています。
+認証情報は端末の Keychain にのみ保存され、SWIM のエンドポイント以外へ送信されることはありません。
 
 > [!WARNING]
 >
@@ -16,33 +24,38 @@ SWIMETAR は、指定した ICAO 空港コードに対応する ATIS（Automatic
 
 ### 必要条件
 
-- Xcode 26 以降
-- アプリを実行できる Apple デバイスまたは Mac
-- 有効な SWIM Web API 認証情報
+- Xcode 26.3 以降
+- iOS / iPadOS 27.0 以降、または macOS 27.0 以降
+- 有効な SWIM Web API 認証情報（登録メールアドレスとパスワード）
 - 利用に必要な権限および適用される利用条件への適合
-
-### 使い方
-
-- 空港コードはカンマ、スペースで区切って入力できます。
-- ステッパーで表示する ATIS 件数を調整できます。
-- アクションメニューから、現在表示中のレポートをコピー、共有、印刷できます。
-- 認証情報は端末の Keychain に保存され、次回以降も再利用されます。
 
 ### 機能
 
-- 1つ以上の ICAO 空港コードを入力できる
-- SWIM から最新の ATIS 情報を取得できる
-- 空港ごとに直近の ATIS メッセージを表示できる
-- 表示件数を調整できる
-- ATIS レポートをコピー、共有、印刷できる
-- SWIM の認証情報を端末の Keychain に安全に保存できる
-- Apple プラットフォーム向けに SwiftUI で構築されている
+- ICAO 空港コードを複数指定して ATIS を取得（4 文字の英字のみを有効なコードとして扱い、重複は自動的に除外）
+- 1 空港あたりの取得件数を 1〜50 件の範囲で指定（初期値 5 件）
+- 空港ごとにセクション分けし、新しい ATIS から順に表示
+- ATIS 本文から Information 記号を抽出して見出しに表示
+- 空港単位でのレポートの共有（コピーと印刷は iOS / iPadOS のみ）
+- 取得結果の再取得・一括クリア
+- 外観（システム設定 / ライト / ダーク）の切り替え
+- 認証情報を Keychain に保存し、次回起動時に自動で再利用（初回ロック解除後・この端末のみ）
+- SWIM のエラーコードを日本語のメッセージに変換して表示
+
+### 使い方
+
+1. 初回起動時のセットアップ画面で、SWIM API の登録メールアドレスとパスワードを入力して保存します。
+2. 入力欄に ICAO 空港コードを入力します。カンマ（`,` / `、`）、スペース、改行、タブで区切って複数指定できます。
+3. ステッパーで 1 空港あたりの表示件数（1〜50）を調整します。
+4. `Request` をタップして ATIS を取得します。
+5. 空港セクション右側のメニューから、その空港のレポートを共有（iOS / iPadOS ではコピー・印刷も）できます。
+6. ツールバーのメニューから、結果の再取得・クリア、外観の変更、認証情報の更新が行えます。
+
+存在しない空港コードや ATIS が無い空港は、エラーにせずスキップされます。すべての空港で結果が得られない場合は、その旨が画面に表示されます。
 
 ### 対応プラットフォーム
 
-- iOS
-- iPadOS
-- macOS（Xcode プロジェクト上で利用可能）
+- iOS / iPadOS（iPhone・iPad）
+- macOS（Mac Catalyst は未対応）
 
 ### はじめ方
 
@@ -53,8 +66,15 @@ SWIMETAR は、指定した ICAO 空港コードに対応する ATIS（Automatic
    ```
 2. Xcode で `SWIM METAR.xcodeproj` を開きます。
 3. シミュレータまたは実機でビルドして実行します。
-4. 起動時に表示される認証画面で、SWIM API のメールアドレスとパスワードを入力します。
+4. 起動時の認証画面で SWIM API の認証情報を入力します。
 5. `RJTT`、`RJAA`、`RJCH` などの ICAO 空港コードを入力し、ATIS を取得します。
+
+### 動作の概要
+
+- ログイン API（`/swim/webapi/login`）で認証し、取得した `MSMSI` / `MSMAI` セッション Cookie を ATIS 取得リクエストに付与します。
+- ATIS は空港ごとに 1 リクエストずつ取得し、`error_info` のコードに応じて結果の採用・スキップ・エラー表示を切り替えます。
+- セッションは毎回の取得時に取り直し、`URLSession` は ephemeral 構成のため Cookie は端末に永続化されません。
+- HTML が返された場合や想定外の JSON 構造の場合は、認証切れ、または応答形式の不一致として扱います。
 
 ### SWIM について
 
@@ -64,9 +84,9 @@ SWIM（System Wide Information Management）は、国土交通省航空局が管
 
 ### Overview
 
-SWIMETAR is a SwiftUI application for retrieving and displaying ATIS (Automatic Terminal Information Service) information from the SWIM Web API for specified ICAO airport codes.
+SWIMETAR is a SwiftUI application that retrieves ATIS (Automatic Terminal Information Service) reports from the SWIM Web API for the ICAO airport codes you specify and presents them grouped by airport. It is intended for users who hold valid SWIM Web API access and need quick operational access to ATIS data.
 
-This application is intended for authorized users who have valid SWIM Web API credentials and a legitimate operational need to access aeronautical information. It is not a public information service for general users.
+Credentials are stored only in the device Keychain and are never sent anywhere other than the SWIM endpoints.
 
 > [!WARNING]
 >
@@ -76,33 +96,38 @@ This application is intended for authorized users who have valid SWIM Web API cr
 
 ### Requirements
 
-- Xcode 26 or later
-- An Apple device or Mac capable of running the project
-- Valid SWIM Web API credentials
+- Xcode 26.3 or later
+- iOS / iPadOS 27.0 or later, or macOS 27.0 or later
+- Valid SWIM Web API credentials (registered email address and password)
 - Appropriate authorization and compliance with the applicable usage conditions
-
-### Usage
-
-- Enter airport codes separated by commas or spaces.
-- Use the stepper to control the number of ATIS entries returned.
-- Tap the action menu to copy, share, or print the currently displayed report.
-- Credentials are saved in the device Keychain and reused for future requests.
 
 ### Features
 
-- Enter one or more ICAO airport codes
-- Retrieve the latest ATIS information from SWIM
-- View recent ATIS messages grouped by airport
-- Adjust the number of messages displayed
-- Copy, share, or print ATIS reports
-- Save SWIM credentials locally on the device using Keychain
-- Built with SwiftUI for Apple platforms
+- Request ATIS for multiple ICAO airport codes at once (only four-letter alphabetic codes are accepted; duplicates are removed automatically)
+- Choose how many reports to retrieve per airport, from 1 to 50 (default 5)
+- Group results into per-airport sections, newest report first
+- Extract the information code from each report and show it as a row heading
+- Share a per-airport report (copy and print are available on iOS / iPadOS only)
+- Re-run the last request or clear all results
+- Switch appearance between system, light, and dark
+- Persist credentials in the Keychain for reuse on next launch (after first unlock, this device only)
+- Translate SWIM service error codes into readable messages
+
+### Usage
+
+1. On first launch, enter and save your SWIM API email address and password in the setup screen.
+2. Enter ICAO airport codes in the text field. Separate multiple codes with commas (`,` / `、`), spaces, newlines, or tabs.
+3. Use the stepper to set the number of reports per airport (1–50).
+4. Tap `Request` to retrieve ATIS data.
+5. Use the menu on the right of each airport section to share that airport's report (copy and print are also available on iOS / iPadOS).
+6. Use the toolbar menus to refresh or clear results, change the appearance, or update stored credentials.
+
+Unknown airport codes and airports without ATIS data are skipped rather than treated as failures. If no airport returns data, the app shows an empty-state message instead.
 
 ### Supported Platforms
 
-- iOS
-- iPadOS
-- macOS (via the Xcode project)
+- iOS / iPadOS (iPhone and iPad)
+- macOS (Mac Catalyst is not supported)
 
 ### Getting Started
 
@@ -116,15 +141,26 @@ This application is intended for authorized users who have valid SWIM Web API cr
 4. Enter your SWIM API email and password when prompted.
 5. Add ICAO airport codes such as `RJTT`, `RJAA`, or `RJCH` and retrieve ATIS information.
 
+### How It Works
+
+- The app authenticates against the login API (`/swim/webapi/login`) and attaches the returned `MSMSI` / `MSMAI` session cookies to the ATIS request.
+- ATIS data is requested one airport at a time, and the `error_info` code determines whether a result is used, skipped, or surfaced as an error.
+- A fresh session is established for every fetch, and the ephemeral `URLSession` configuration means cookies are never persisted on the device.
+- HTML responses or unexpected JSON structures are reported as an expired session or a payload mismatch.
+
 ### About SWIM
 
 SWIM (System Wide Information Management) is an information-sharing framework for aviation data managed by the Civil Aviation Bureau of the Ministry of Land, Infrastructure, Transport and Tourism. It supports the distribution of operational, meteorological, and flight-related information needed by aviation stakeholders in the course of their work.
 
 ## Project Structure
 
-- `SWIM METAR/` — application source code
+- `SWIM METAR/MyApp.swift` — app entry point
+- `SWIM METAR/ContentView.swift` — app state model and SwiftUI views
+- `SWIM METAR/ATISClient.swift` — SWIM authentication and ATIS requests
+- `SWIM METAR/ATISModels.swift` — response models, ATIS parsing, and error definitions
+- `SWIM METAR/KeychainStore.swift` — Keychain-backed credential storage
+- `SWIM METAR/Assets.xcassets/` — app icon and color assets
 - `SWIM METAR.xcodeproj/` — Xcode project files
-- `README.md` — project documentation
 - `LICENSE` — MIT license
 
 ## License
