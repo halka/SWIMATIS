@@ -6,23 +6,21 @@ This application is intended for authorized users who have valid SWIM Web API cr
 
 SWIMETAR は、指定した ICAO 空港コードに対応する ATIS（Automatic Terminal Information Service）を、SWIM Web API から取得して表示するための SwiftUI アプリケーションです。
 
-本アプリは、SWIM Web API の利用資格を有し、航空情報を業務上必要とする利用者を前提としております。一般市民向けの公開サービスではなく、一般の方が利用することを想定していません。利用には、当該情報提供機関の定める認証・利用条件を満たしたうえで、適切な目的に基づいて使用する必要があります。
+**認可された利用者が SWIM Web API を通じて ATISを短時間で確認できるようにすることを目的としています。**
+
+> [!WARNING]
+>
+> 航空関係者・認定ユーザー等の業務利用を想定しており、一般市民向けの情報閲覧アプリではありません。<br>
+> 本アプリは、SWIM Web API の利用資格を有し、航空情報を業務上必要とする利用者を前提としています。<br>
+> 利用には適切な認証情報、利用目的、及び情報提供者の条件を満たしていることが前提です。
 
 ## About SWIM
 
 SWIM (System Wide Information Management) is an information-sharing framework for aviation data managed by the Civil Aviation Bureau of the Ministry of Land, Infrastructure, Transport and Tourism. It provides standardized access to airport operational information, weather information, flight information, and other relevant aeronautical data used by aviation stakeholders.
 
-SWIMETAR is designed to help authorized users quickly review ATIS messages and related operational information through the SWIM Web API.
-
 ## SWIM について
 
 SWIM（System Wide Information Management）は、国土交通省航空局が管理する航空情報の共有基盤です。空港運航情報、気象情報、飛行情報など、航空関係者が安全かつ効率的に利用するための各種データを標準化された方式で提供します。
-
-SWIMETAR は、認可された利用者が SWIM Web API を通じて ATIS 情報や関連する運航情報を短時間で確認できるようにすることを目的としています。
-
-> 重要: 本アプリは一般市民向けの情報閲覧アプリではありません。
-> 利用には適切な認証情報、利用目的、及び情報提供者の条件を満たしていることが前提です。
-> 会社員・航空関係者・認定ユーザー等の業務利用を想定しており、一般向けの公開情報提供サービスではありません。
 
 ## Features
 
