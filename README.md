@@ -130,7 +130,3 @@ SWIM (System Wide Information Management) is an information-sharing framework fo
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-## ライセンス
-
-本プロジェクトは MIT License のもとで提供されています。詳細は [LICENSE](LICENSE) ファイルをご覧ください。
