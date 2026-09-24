@@ -37,14 +37,12 @@ struct CredentialsView: View {
 
                 Section {
                     Button(action: saveCredentials) {
-                        Label(
-                            isInitialSetup ? "保存して開始" : "認証情報を更新",
-                            systemImage: "checkmark.shield.fill"
+                        Text(
+                            isInitialSetup ? "保存して開始" : "認証情報を更新"
                         )
                         .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.glassProminent)
-                    .tint(.indigo)
                     .disabled(userID.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || password.isEmpty)
                 }
             }

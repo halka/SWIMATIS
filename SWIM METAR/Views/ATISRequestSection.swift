@@ -16,7 +16,7 @@ struct ATISRequestSection: View {
             .submitLabel(.search)
             .onSubmit(requestATIS)
             .accessibilityLabel("ICAO 空港コード")
-            .accessibilityHint("複数入力する場合は、カンマまたは空白で区切ります")
+            .accessibilityHint("複数空港指定時はカンマまたは空白で区切る")
 
             Stepper(value: $model.displayCount, in: 1...50) {
                 LabeledContent("表示件数") {
@@ -33,9 +33,9 @@ struct ATISRequestSection: View {
             .buttonStyle(.glassProminent)
             .disabled(model.isLoading || model.normalizedLocations.isEmpty)
         } header: {
-            Text("4文字のICAO空港コードを入力します。")
+            Text("4文字のICAO空港コードを入力。")
         } footer: {
-            Text("複数の空港はカンマまたは空白で区切れます。")
+            Text("複数空港指定時はカンマまたは空白を挟むこと。")
         }
     }
 

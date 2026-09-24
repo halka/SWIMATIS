@@ -21,7 +21,7 @@ struct AirportATISSection: View {
             } label: {
                 HStack(spacing: 10) {
                     Text(messages.first?.informationCode ?? "—")
-                        .font(.largeTitle.weight(.bold))
+                        .font(.largeTitle.weight(.bold).monospaced())
                         .foregroundStyle(.tint)
                         .frame(minWidth: 44, minHeight: 44)
                         .accessibilityLabel("ATIS情報コード")
@@ -33,12 +33,10 @@ struct AirportATISSection: View {
                                 .font(.title.weight(.bold))
                                 .foregroundStyle(.primary)
 
-                            if let issueTimeGroup = messages.first?.issueTimeGroup {
-                                Text(issueTimeGroup)
-                                    .font(.subheadline.weight(.medium))
-                                    .foregroundStyle(.secondary)
-                                    .monospacedDigit()
-                            }
+                            Text(messages.first?.issueTimeGroup ?? "CLOSE")
+                                .font(.title2.italic())
+                                .foregroundStyle(.secondary)
+                                .monospacedDigit()
                         }
 
                         if let fetchedAt {
@@ -86,7 +84,7 @@ private struct ATISMessageRow: View {
 
     private var export: ATISExport {
         ATISExport(
-            title: "\(message.airport) ATIS",
+            title: "\(message.airport) WEATHER",
             messages: [message],
             fetchedAt: fetchedAt
         )

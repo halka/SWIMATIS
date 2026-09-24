@@ -7,7 +7,12 @@ struct ATISMessage: Identifiable {
 
     var informationCode: String? {
         let firstLine = rawText.split(whereSeparator: \.isNewline).first.map(String.init)
-        return firstLine?.split(separator: " ").last.map(String.init)
+        let informationCode = firstLine?.split(separator: " ").last.map(String.init)
+        
+        guard informationCode?.count == 1 else {
+            return "🚫"
+        }
+        return informationCode
     }
 
     var issueTimeGroup: String? {
