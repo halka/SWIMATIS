@@ -31,38 +31,50 @@ struct ATISExport {
         return ([header] + rows).joined(separator: "\r\n")
     }
 
-    private static func csvField(_ value: String) -> String {
+    nonisolated private static func csvField(_ value: String) -> String {
         "\"\(value.replacingOccurrences(of: "\"", with: "\"\""))\""
     }
 }
 
-struct ATISTextFile: Transferable {
-    let export: ATISExport
+struct ATISTextFile: Transferable, Sendable {
+    let data: Data
+
+    init(export: ATISExport) {
+        data = Data(export.plainText.utf8)
+    }
 
     static var transferRepresentation: some TransferRepresentation {
         DataRepresentation(exportedContentType: .utf8PlainText) { item in
-            Data(item.export.plainText.utf8)
+            item.data
         }
     }
 }
 
-struct ATISCSVFile: Transferable {
-    let export: ATISExport
+struct ATISCSVFile: Transferable, Sendable {
+    let data: Data
+
+    init(export: ATISExport) {
+        data = Data(export.csvText.utf8)
+    }
 
     static var transferRepresentation: some TransferRepresentation {
         DataRepresentation(exportedContentType: .commaSeparatedText) { item in
-            Data(item.export.csvText.utf8)
+            item.data
         }
     }
 }
 
 #if os(iOS)
-struct ATISPDFFile: Transferable {
-    let export: ATISExport
+struct ATISPDFFile: Transferable, Sendable {
+    let data: Data
+
+    init(export: ATISExport) {
+        data = export.pdfData
+    }
 
     static var transferRepresentation: some TransferRepresentation {
         DataRepresentation(exportedContentType: .pdf) { item in
-            item.export.pdfData
+            item.data
         }
     }
 }
@@ -76,7 +88,7 @@ extension ATISExport {
             string: plainText,
             attributes: [
                 .font: UIFont.monospacedSystemFont(ofSize: 10, weight: .regular),
-                .foregroundColor: UIColor.label
+                .foregroundColor: UIColor.black
             ]
         )
 
@@ -85,6 +97,10 @@ extension ATISExport {
             let framesetter = CTFramesetterCreateWithAttributedString(attributedText)
             while remainingRange.length > 0 {
                 context.beginPage()
+                context.cgContext.saveGState()
+                context.cgContext.textMatrix = .identity
+                context.cgContext.translateBy(x: 0, y: pageBounds.height)
+                context.cgContext.scaleBy(x: 1, y: -1)
                 let path = CGPath(rect: printableBounds, transform: nil)
                 let frame = CTFramesetterCreateFrame(
                     framesetter,
@@ -93,6 +109,7 @@ extension ATISExport {
                     nil
                 )
                 CTFrameDraw(frame, context.cgContext)
+                context.cgContext.restoreGState()
                 let visibleRange = CTFrameGetVisibleStringRange(frame)
                 guard visibleRange.length > 0 else { break }
                 remainingRange.location += visibleRange.length
