@@ -1,8 +1,8 @@
-# WXREQ
+# SWIMATIS
 
 SWIM Web API から複数空港の ATIS を取得し、発行日時順に表示する SwiftUI アプリです。
 
-A SwiftUI app that retrieves ATIS for multiple airports from the SWIM Web API and displays reports in issue-time 
+A SwiftUI app that retrieves ATIS for multiple airports from the SWIM Web API and displays reports in latest.
 
 > [!WARNING]
 > 業務利用を前提としたアプリであり、一般向けの航空情報閲覧サービスではありません。<br>
