@@ -16,8 +16,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "000000000000000100000000"
-               BuildableName = "SWIM ATIS.app"
-               ReferencedContainer = "container:SWIM METAR.xcodeproj">
+               BuildableName = "SWIMATIS.app"
+               ReferencedContainer = "container:SWIMATIS.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,8 +45,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "000000000000000100000000"
-            BuildableName = "SWIM ATIS.app"
-            ReferencedContainer = "container:SWIM METAR.xcodeproj">
+            BuildableName = "SWIMATIS.app"
+            ReferencedContainer = "container:SWIMATIS.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -61,8 +61,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "000000000000000100000000"
-            BuildableName = "SWIM ATIS.app"
-            ReferencedContainer = "container:SWIM METAR.xcodeproj">
+            BuildableName = "SWIMATIS.app"
+            ReferencedContainer = "container:SWIMATIS.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
