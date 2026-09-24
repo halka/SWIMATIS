@@ -31,7 +31,7 @@ A SwiftUI app that retrieves ATIS for multiple airports from the SWIM Web API an
 
 ### 概要
 
-SWIMETAR は、指定した ICAO 空港コードの ATIS（Automatic Terminal Information Service）を SWIM Web API から取得し、空港ごとに整理して表示する SwiftUI アプリケーションです。SWIM Web API の利用資格を持つ利用者が、必要な ATIS を短時間で確認できるようにすることを目的としています。
+SWIMATIS は、指定した ICAO 空港コードの ATIS（Automatic Terminal Information Service）を SWIM Web API から取得し、空港ごとに整理して表示する SwiftUI アプリケーションです。SWIM Web API の利用資格を持つ利用者が、必要な ATIS を短時間で確認できるようにすることを目的としています。
 
 認証情報は端末の Keychain にのみ保存され、認証とATIS取得のためにSWIMのエンドポイントへ送信されます。
 
@@ -99,7 +99,7 @@ SWIM（System Wide Information Management）は、国土交通省航空局が管
 
 ### Overview
 
-SWIMETAR is a SwiftUI application that retrieves ATIS (Automatic Terminal Information Service) reports from the SWIM Web API for the ICAO airport codes you specify and presents them grouped by airport. It is intended for users who hold valid SWIM Web API access and need quick operational access to ATIS data.
+SWIMATIS is a SwiftUI application that retrieves ATIS (Automatic Terminal Information Service) reports from the SWIM Web API for the ICAO airport codes you specify and presents them grouped by airport. It is intended for users who hold valid SWIM Web API access and need quick operational access to ATIS data.
 
 Credentials are stored only in the device Keychain and are sent to the SWIM endpoints solely for authentication and ATIS retrieval.
 
