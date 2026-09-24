@@ -1,4 +1,4 @@
-# SWIM METAR
+# WXREQ
 
 SWIM Web API から複数空港の ATIS を取得し、発行日時順に表示する SwiftUI アプリです。
 
