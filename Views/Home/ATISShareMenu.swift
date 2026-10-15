@@ -1,9 +1,5 @@
 import SwiftUI
 
-#if os(iOS)
-import UIKit
-#endif
-
 struct ATISShareMenu: View {
     let export: ATISExport
 

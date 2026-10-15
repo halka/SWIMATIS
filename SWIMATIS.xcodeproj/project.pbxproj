@@ -6,20 +6,51 @@
 	objectVersion = 90;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		2E45465A30805AEC001049D3 /* AppAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF29BF1307CD7C9003FF199 /* AppAppearance.swift */; };
+		2E45465B30805AEC001049D3 /* ATISAppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF29BFB307CD94E003FF199 /* ATISAppModel.swift */; };
+		2E45465C30805AEC001049D3 /* SWIMATISApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4545D130805224001049D3 /* SWIMATISApp.swift */; };
+		2E45465D30805AEC001049D3 /* AppRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4545DD308053A4001049D3 /* AppRootView.swift */; };
+		2E45465E30805AEC001049D3 /* ATISMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4545DF308053B4001049D3 /* ATISMessage.swift */; };
+		2E45465F30805AEC001049D3 /* SWIMCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4545E1308053B4001049D3 /* SWIMCredentials.swift */; };
+		2E45466030805AEC001049D3 /* ATISResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4545E3308053B4001049D3 /* ATISResponse.swift */; };
+		2E45466130805AEC001049D3 /* ATISRequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4545E5308053B5001049D3 /* ATISRequestError.swift */; };
+		2E45466230805AEC001049D3 /* ATISExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4545E7308053B5001049D3 /* ATISExport.swift */; };
+		2E45466330805AEC001049D3 /* CredentialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4545F7308053B6001049D3 /* CredentialsView.swift */; };
+		2E45466430805AEC001049D3 /* ATISHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4545ED308053B5001049D3 /* ATISHomeView.swift */; };
+		2E45466530805AEC001049D3 /* AirportATISSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4545EF308053B5001049D3 /* AirportATISSection.swift */; };
+		2E45466630805AEC001049D3 /* ATISRequestSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4545F1308053B5001049D3 /* ATISRequestSection.swift */; };
+		2E45466730805AEC001049D3 /* ATISShareMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4545F3308053B6001049D3 /* ATISShareMenu.swift */; };
+		2E45466830805AEC001049D3 /* ATISStatusSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4545F5308053B6001049D3 /* ATISStatusSections.swift */; };
+		2E45466930805AEC001049D3 /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4545EB308053B5001049D3 /* KeychainStore.swift */; };
+		2E45466A30805AEC001049D3 /* ATISClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4545E9308053B5001049D3 /* ATISClient.swift */; };
+		2E45466B30805AEC001049D3 /* Assets.xcassets in Sources */ = {isa = PBXBuildFile; fileRef = 2E454659308057DE001049D3 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
-		000000000000000000000120 /* SWIMATIS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SWIMATIS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E4545D130805224001049D3 /* SWIMATISApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SWIMATISApp.swift; sourceTree = "<group>"; };
+		2E4545DD308053A4001049D3 /* AppRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootView.swift; sourceTree = "<group>"; };
+		2E4545DF308053B4001049D3 /* ATISMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATISMessage.swift; sourceTree = "<group>"; };
+		2E4545E1308053B4001049D3 /* SWIMCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SWIMCredentials.swift; sourceTree = "<group>"; };
+		2E4545E3308053B4001049D3 /* ATISResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATISResponse.swift; sourceTree = "<group>"; };
+		2E4545E5308053B5001049D3 /* ATISRequestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATISRequestError.swift; sourceTree = "<group>"; };
+		2E4545E7308053B5001049D3 /* ATISExport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATISExport.swift; sourceTree = "<group>"; };
+		2E4545E9308053B5001049D3 /* ATISClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATISClient.swift; sourceTree = "<group>"; };
+		2E4545EB308053B5001049D3 /* KeychainStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStore.swift; sourceTree = "<group>"; };
+		2E4545ED308053B5001049D3 /* ATISHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATISHomeView.swift; sourceTree = "<group>"; };
+		2E4545EF308053B5001049D3 /* AirportATISSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirportATISSection.swift; sourceTree = "<group>"; };
+		2E4545F1308053B5001049D3 /* ATISRequestSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATISRequestSection.swift; sourceTree = "<group>"; };
+		2E4545F3308053B6001049D3 /* ATISShareMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATISShareMenu.swift; sourceTree = "<group>"; };
+		2E4545F5308053B6001049D3 /* ATISStatusSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATISStatusSections.swift; sourceTree = "<group>"; };
+		2E4545F7308053B6001049D3 /* CredentialsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialsView.swift; sourceTree = "<group>"; };
+		2E454642308056A9001049D3 /* SWIMATIS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SWIMATIS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E454659308057DE001049D3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2EF29BF1307CD7C9003FF199 /* AppAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAppearance.swift; sourceTree = "<group>"; };
+		2EF29BFB307CD94E003FF199 /* ATISAppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATISAppModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		000000000000000000000010 /* SWIMATIS */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = SWIMATIS;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
-
 /* Begin PBXFrameworksBuildPhase section */
-		000000000000000130000000 /* Frameworks */ = {
+		2E45463F308056A9001049D3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
 			);
@@ -30,38 +61,140 @@
 		000000000000000000000001 = {
 			isa = PBXGroup;
 			children = (
-				000000000000000000000010 /* SWIMATIS */,
 				000000000000000000000020 /* Products */,
+				2EF29BF0307CD7C9003FF199 /* App */,
+				2EF29BF8307CD94E003FF199 /* Models */,
+				2EF29BF9307CD94E003FF199 /* Views */,
+				2EF29BFA307CD94E003FF199 /* Services */,
+				2E454659308057DE001049D3 /* Assets.xcassets */,
 			);
 			sourceTree = "<group>";
 		};
 		000000000000000000000020 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				000000000000000000000120 /* SWIMATIS.app */,
+				2E454642308056A9001049D3 /* SWIMATIS.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		2E4545D63080539B001049D3 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				2E4545DF308053B4001049D3 /* ATISMessage.swift */,
+				2E4545E1308053B4001049D3 /* SWIMCredentials.swift */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		2E4545D73080539B001049D3 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				2E4545E3308053B4001049D3 /* ATISResponse.swift */,
+				2E4545E5308053B5001049D3 /* ATISRequestError.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		2E4545D83080539B001049D3 /* Credentials */ = {
+			isa = PBXGroup;
+			children = (
+				2E4545F7308053B6001049D3 /* CredentialsView.swift */,
+			);
+			path = Credentials;
+			sourceTree = "<group>";
+		};
+		2E4545D93080539C001049D3 /* Security */ = {
+			isa = PBXGroup;
+			children = (
+				2E4545EB308053B5001049D3 /* KeychainStore.swift */,
+			);
+			path = Security;
+			sourceTree = "<group>";
+		};
+		2E4545DA3080539C001049D3 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				2E4545E9308053B5001049D3 /* ATISClient.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		2E4545DB3080539C001049D3 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				2E4545ED308053B5001049D3 /* ATISHomeView.swift */,
+				2E4545EF308053B5001049D3 /* AirportATISSection.swift */,
+				2E4545F1308053B5001049D3 /* ATISRequestSection.swift */,
+				2E4545F3308053B6001049D3 /* ATISShareMenu.swift */,
+				2E4545F5308053B6001049D3 /* ATISStatusSections.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		2E4545DC3080539C001049D3 /* Export */ = {
+			isa = PBXGroup;
+			children = (
+				2E4545E7308053B5001049D3 /* ATISExport.swift */,
+			);
+			path = Export;
+			sourceTree = "<group>";
+		};
+		2EF29BF0307CD7C9003FF199 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				2EF29BF1307CD7C9003FF199 /* AppAppearance.swift */,
+				2EF29BFB307CD94E003FF199 /* ATISAppModel.swift */,
+				2E4545D130805224001049D3 /* SWIMATISApp.swift */,
+				2E4545DD308053A4001049D3 /* AppRootView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		2EF29BF8307CD94E003FF199 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2E4545D63080539B001049D3 /* Domain */,
+				2E4545D73080539B001049D3 /* API */,
+				2E4545DC3080539C001049D3 /* Export */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		2EF29BF9307CD94E003FF199 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2E4545D83080539B001049D3 /* Credentials */,
+				2E4545DB3080539C001049D3 /* Home */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		2EF29BFA307CD94E003FF199 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				2E4545D93080539C001049D3 /* Security */,
+				2E4545DA3080539C001049D3 /* Network */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		000000000000000100000000 /* SWIMATIS */ = {
+		2E454641308056A9001049D3 /* SWIMATIS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 000000000000000110000000 /* Build configuration list for PBXNativeTarget "SWIMATIS" */;
+			buildConfigurationList = 2E45464A308056AA001049D3 /* Build configuration list for PBXNativeTarget "SWIMATIS" */;
 			buildPhases = (
-				000000000000000120000000 /* Sources */,
-				000000000000000130000000 /* Frameworks */,
-				000000000000000140000000 /* Resources */,
+				2E45463E308056A9001049D3 /* Sources */,
+				2E45463F308056A9001049D3 /* Frameworks */,
+				2E454640308056A9001049D3 /* Resources */,
 			);
 			buildRules = (
 			);
-			fileSystemSynchronizedGroups = (
-				000000000000000000000010 /* SWIMATIS */,
-			);
 			name = SWIMATIS;
-			productName = MyApp;
-			productReference = 000000000000000000000120 /* SWIMATIS.app */;
+			productName = SWIMATIS;
+			productReference = 2E454642308056A9001049D3 /* SWIMATIS.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -71,11 +204,11 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 2630;
+				LastSwiftUpdateCheck = 2700;
 				LastUpgradeCheck = 2700;
 				TargetAttributes = {
-					000000000000000100000000 = {
-						CreatedOnToolsVersion = 26.3;
+					2E454641308056A9001049D3 = {
+						CreatedOnToolsVersion = 27.0;
 					};
 				};
 			};
@@ -93,13 +226,13 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				000000000000000100000000 /* SWIMATIS */,
+				2E454641308056A9001049D3 /* SWIMATIS */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		000000000000000140000000 /* Resources */ = {
+		2E454640308056A9001049D3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			files = (
 			);
@@ -107,9 +240,27 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		000000000000000120000000 /* Sources */ = {
+		2E45463E308056A9001049D3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			files = (
+				2E45465A30805AEC001049D3 /* AppAppearance.swift in Sources */,
+				2E45465B30805AEC001049D3 /* ATISAppModel.swift in Sources */,
+				2E45465C30805AEC001049D3 /* SWIMATISApp.swift in Sources */,
+				2E45465D30805AEC001049D3 /* AppRootView.swift in Sources */,
+				2E45465E30805AEC001049D3 /* ATISMessage.swift in Sources */,
+				2E45465F30805AEC001049D3 /* SWIMCredentials.swift in Sources */,
+				2E45466030805AEC001049D3 /* ATISResponse.swift in Sources */,
+				2E45466130805AEC001049D3 /* ATISRequestError.swift in Sources */,
+				2E45466230805AEC001049D3 /* ATISExport.swift in Sources */,
+				2E45466330805AEC001049D3 /* CredentialsView.swift in Sources */,
+				2E45466430805AEC001049D3 /* ATISHomeView.swift in Sources */,
+				2E45466530805AEC001049D3 /* AirportATISSection.swift in Sources */,
+				2E45466630805AEC001049D3 /* ATISRequestSection.swift in Sources */,
+				2E45466730805AEC001049D3 /* ATISShareMenu.swift in Sources */,
+				2E45466830805AEC001049D3 /* ATISStatusSections.swift in Sources */,
+				2E45466930805AEC001049D3 /* KeychainStore.swift in Sources */,
+				2E45466A30805AEC001049D3 /* ATISClient.swift in Sources */,
+				2E45466B30805AEC001049D3 /* Assets.xcassets in Sources */,
 			);
 		};
 /* End PBXSourcesBuildPhase section */
@@ -171,8 +322,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "";
-				"INFOPLIST_KEY_CFBundleDisplayName[sdk=*]" = jp.rjch.swimatis.debug;
 				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 27.0;
@@ -240,7 +389,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "";
-				"INFOPLIST_KEY_CFBundleDisplayName[sdk=*]" = jp.rjch.swimatis;
 				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 27.0;
@@ -256,33 +404,19 @@
 			};
 			name = Release;
 		};
-		000000000000000111000000 /* Debug configuration for PBXNativeTarget "SWIMATIS" */ = {
+		2E45464B308056AA001049D3 /* Debug configuration for PBXNativeTarget "SWIMATIS" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = 55NKU52L43;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = SXXC568Q27;
 				ENABLE_APP_SANDBOX = YES;
-				ENABLE_FILE_ACCESS_DOWNLOADS_FOLDER = readwrite;
-				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
-				ENABLE_OUTGOING_NETWORK_CONNECTIONS = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
-				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
-				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
-				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
-				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
-				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
-				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
-				ENABLE_RESOURCE_ACCESS_PRINTING = YES;
-				ENABLE_RESOURCE_ACCESS_USB = NO;
-				ENABLE_USER_SELECTED_FILES = readwrite;
+				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "志賀島リクWX_Dev";
-				"INFOPLIST_KEY_CFBundleDisplayName[sdk=*]" = "志賀島リクWX_Dev";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -291,53 +425,42 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MARKETING_VERSION = 1;
-				PRODUCT_BUNDLE_IDENTIFIER = jp.rjch.swimatis;
-				PRODUCT_NAME = SWIMATIS;
+				MACOSX_DEPLOYMENT_TARGET = 27.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = app.rjch.SWIMATIS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
-				SUPPORTS_MACCATALYST = NO;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 27.0;
 			};
 			name = Debug;
 		};
-		000000000000000112000000 /* Release configuration for PBXNativeTarget "SWIMATIS" */ = {
+		2E45464C308056AA001049D3 /* Release configuration for PBXNativeTarget "SWIMATIS" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = 55NKU52L43;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = SXXC568Q27;
 				ENABLE_APP_SANDBOX = YES;
-				ENABLE_FILE_ACCESS_DOWNLOADS_FOLDER = readwrite;
-				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
-				ENABLE_OUTGOING_NETWORK_CONNECTIONS = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
-				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
-				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
-				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
-				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
-				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
-				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
-				ENABLE_RESOURCE_ACCESS_PRINTING = YES;
-				ENABLE_RESOURCE_ACCESS_USB = NO;
-				ENABLE_USER_SELECTED_FILES = readwrite;
+				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "志賀島リクWX";
-				"INFOPLIST_KEY_CFBundleDisplayName[sdk=*]" = "志賀島リクWX";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -346,23 +469,26 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MARKETING_VERSION = 1;
-				PRODUCT_BUNDLE_IDENTIFIER = jp.rjch.swimatis;
-				PRODUCT_NAME = SWIMATIS;
+				MACOSX_DEPLOYMENT_TARGET = 27.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = app.rjch.SWIMATIS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
-				SUPPORTS_MACCATALYST = NO;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 27.0;
 			};
 			name = Release;
 		};
@@ -377,11 +503,11 @@
 			);
 			defaultConfigurationName = Release;
 		};
-		000000000000000110000000 /* Build configuration list for PBXNativeTarget "SWIMATIS" */ = {
+		2E45464A308056AA001049D3 /* Build configuration list for PBXNativeTarget "SWIMATIS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				000000000000000111000000 /* Debug configuration for PBXNativeTarget "SWIMATIS" */,
-				000000000000000112000000 /* Release configuration for PBXNativeTarget "SWIMATIS" */,
+				2E45464B308056AA001049D3 /* Debug configuration for PBXNativeTarget "SWIMATIS" */,
+				2E45464C308056AA001049D3 /* Release configuration for PBXNativeTarget "SWIMATIS" */,
 			);
 			defaultConfigurationName = Release;
 		};

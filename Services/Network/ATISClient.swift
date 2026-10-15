@@ -94,6 +94,7 @@ struct ATISClient {
         for cookie in cookieStorage.cookies ?? [] {
             if cookie.name == "MSMSI" || cookie.name == "MSMAI" {
                 values[cookie.name] = cookie.value
+
             }
         }
 

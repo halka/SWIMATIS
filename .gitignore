@@ -1,0 +1,20 @@
+# macOS Finder metadata
+.DS_Store
+
+# Xcode user-specific settings and workspace state
+xcuserdata/
+*.xcuserstate
+
+# Xcode build products and intermediate files
+DerivedData/
+build/
+*.d
+*.dia
+*.o
+*.swiftdeps
+*.swiftconstvalues
+
+# Swift Package Manager
+.build/
+Packages/
+Package.resolved

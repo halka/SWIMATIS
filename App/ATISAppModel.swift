@@ -4,7 +4,7 @@ import Observation
 @MainActor
 @Observable
 final class ATISAppModel {
-    enum LaunchState {
+    enum LaunchState: Equatable {
         case loading
         case requiresCredentials
         case ready
@@ -120,19 +120,21 @@ final class ATISAppModel {
         } catch is CancellationError {
             return
         } catch {
-            messages = []
-            resultLocationOrder = []
-            lastFetchedAt = nil
+            clearFetchedResults()
             errorMessage = error.localizedDescription
         }
     }
 
     func clearResults() {
+        clearFetchedResults()
+        hasRequested = false
+        errorMessage = nil
+    }
+
+    private func clearFetchedResults() {
         messages = []
         resultLocationOrder = []
         lastFetchedAt = nil
-        hasRequested = false
-        errorMessage = nil
     }
 
     var normalizedLocations: [String] {

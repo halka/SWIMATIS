@@ -1,7 +1,6 @@
-import CoreTransferable
 import Foundation
+import CoreTransferable
 import UniformTypeIdentifiers
-
 #if os(iOS)
 import CoreText
 import UIKit

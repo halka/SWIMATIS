@@ -26,6 +26,7 @@ struct CredentialsView: View {
 
                     SecureField("パスワード", text: $password)
                         .focused($focusedField, equals: .password)
+
                         .textContentType(.password)
                         .submitLabel(.done)
                         .onSubmit(saveCredentials)
