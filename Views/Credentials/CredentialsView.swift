@@ -52,7 +52,9 @@ struct CredentialsView: View {
                 focusedField = nil
             }
             .navigationTitle(isInitialSetup ? "セットアップ" : "認証情報")
+#if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
+#endif
             .toolbar {
                 if !isInitialSetup {
                     ToolbarItem(placement: .cancellationAction) {

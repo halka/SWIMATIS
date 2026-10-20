@@ -47,7 +47,7 @@ struct ATISHomeView: View {
                     }
                 }
             }
-            .listStyle(.insetGrouped)
+            .listStyle(.inset)
             .scrollBounceBehavior(.basedOnSize)
             .scrollDismissesKeyboard(.interactively)
             .onTapGesture {
