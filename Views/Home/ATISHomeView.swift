@@ -53,7 +53,6 @@ struct ATISHomeView: View {
             .onTapGesture {
                 isLocationFieldFocused = false
             }
-            .navigationTitle("WXREQ")
             .navigationSubtitle("SWIM ATIS Request Service")
             .toolbar {
                 ToolbarItemGroup(placement: .primaryAction) {

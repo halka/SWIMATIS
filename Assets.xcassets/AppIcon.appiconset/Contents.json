@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "shikanoshima.png",
+      "filename" : "any.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -13,7 +13,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "shikanoshima 1.png",
+      "filename" : "dark.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -25,13 +25,13 @@
           "value" : "tinted"
         }
       ],
-      "filename" : "shikanoshima 2.png",
+      "filename" : "tinted.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
     },
     {
-      "filename" : "shikanoshima 3.png",
+      "filename" : "any 1.png",
       "idiom" : "universal",
       "platform" : "watchos",
       "size" : "1024x1024"

@@ -7,7 +7,7 @@ struct ATISRequestSection: View {
     var body: some View {
         Section {
             TextField(
-                "例: RJCH, RJTT, RJAA",
+                "Example: RJCH,RJTT,RJGG RJOO",
                 text: $model.locationsText,
                 axis: .vertical
             )
@@ -16,8 +16,8 @@ struct ATISRequestSection: View {
             .submitLabel(.search)
             .onSubmit(requestATIS)
             .accessibilityLabel("ICAO 空港コード")
-            .accessibilityHint("複数空港指定時はカンマまたは空白で区切る")
-
+            .accessibilityHint("複数空港指定時はカンマまたは空白、改行で区切る")
+            
             Stepper(value: $model.displayCount, in: 1...50) {
                 LabeledContent("表示件数") {
                     Text("\(model.displayCount)")
@@ -25,18 +25,19 @@ struct ATISRequestSection: View {
                         .foregroundStyle(.tint)
                 }
             }
-
+            
             Button(action: requestATIS) {
                 Text("ATISを取得")
                     .frame(maxWidth: .infinity)
             }
             .buttonStyle(.glassProminent)
             .disabled(model.isLoading || model.normalizedLocations.isEmpty)
-        } header: {
-            Text("4文字のICAO空港コードを入力。")
-        } footer: {
-            Text("複数空港指定時はカンマまたは空白を挟むこと。")
         }
+//        } header: {
+//            Text("4文字のICAO空港コードを入力。")
+//        } footer: {
+//            Text("複数空港指定時はカンマまたは空白を挟むこと。")
+//        }
     }
 
     private func requestATIS() {
