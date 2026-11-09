@@ -18,14 +18,15 @@ struct ATISRequestSection: View {
             .accessibilityLabel("ICAO 空港コード")
             .accessibilityHint("複数空港指定時はカンマまたは空白、改行で区切る")
             
-            Stepper(value: $model.displayCount, in: 1...50) {
-                LabeledContent("表示件数") {
-                    Text("\(model.displayCount)")
-                        .monospacedDigit()
-                        .foregroundStyle(.tint)
-                }
+            LabeledContent("表示件数") {
+                TextField("1–50", value: $model.requestedDisplayCount, format: .number)
+                    .multilineTextAlignment(.trailing)
+                    .monospacedDigit()
+                    .frame(width: 64)
+                    .displayCountInputBehavior()
+                    .accessibilityLabel("1空港あたりの表示件数")
+                    .accessibilityHint("1から50までの数字を入力")
             }
-            
             Button(action: requestATIS) {
                 Text("ATISを取得")
                     .frame(maxWidth: .infinity)
@@ -55,6 +56,13 @@ private extension View {
             .keyboardType(.asciiCapable)
 #else
         autocorrectionDisabled()
+#endif
+    }
+
+    @ViewBuilder
+    func displayCountInputBehavior() -> some View {
+#if os(iOS)
+        keyboardType(.numberPad)
 #endif
     }
 }

@@ -1,11 +1,44 @@
 import Foundation
 
 struct ATISMessage: Identifiable {
+    enum Source: String, Sendable {
+        case swim
+        case checkWXMETAR
+        case checkWXTAF
+
+        var displayName: String {
+            switch self {
+            case .swim: "SWIM ATIS"
+            case .checkWXMETAR: "CheckWX METAR"
+            case .checkWXTAF: "CheckWX TAF"
+            }
+        }
+
+        var reportName: String? {
+            switch self {
+            case .swim: nil
+            case .checkWXMETAR: "METAR"
+            case .checkWXTAF: "TAF"
+            }
+        }
+    }
+
     let id: String
     let airport: String
     let rawText: String
+    let source: Source
+
+    init(id: String, airport: String, rawText: String, source: Source = .swim) {
+        self.id = id
+        self.airport = airport
+        self.rawText = rawText
+        self.source = source
+    }
 
     var informationCode: String? {
+        if let reportName = source.reportName { return reportName }
+        guard !isClosed else { return nil }
+
         let firstLine = rawText.split(whereSeparator: \.isNewline).first.map(String.init)
         let informationCode = firstLine?.split(separator: " ").last.map(String.init)
         
@@ -24,6 +57,13 @@ struct ATISMessage: Identifiable {
                     && token.last == "Z"
                     && token.dropLast().allSatisfy(\.isNumber)
             }
+    }
+
+    var isClosed: Bool {
+        rawText
+            .split(whereSeparator: \.isWhitespace)
+            .map { $0.trimmingCharacters(in: .punctuationCharacters).uppercased() }
+            .contains("CLOSE")
     }
 
     func issuedAt(relativeTo referenceDate: Date) -> Date? {

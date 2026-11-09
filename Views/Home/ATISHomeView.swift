@@ -3,6 +3,7 @@ import SwiftUI
 struct ATISHomeView: View {
     @Bindable var model: ATISAppModel
     @State private var isShowingCredentials = false
+    @State private var isShowingCheckWXSettings = false
     @State private var isShowingClearConfirmation = false
     @AppStorage("appAppearance") private var appearance: AppAppearance = .system
     @FocusState private var isLocationFieldFocused: Bool
@@ -50,6 +51,10 @@ struct ATISHomeView: View {
             .listStyle(.inset)
             .scrollBounceBehavior(.basedOnSize)
             .scrollDismissesKeyboard(.interactively)
+            .refreshable {
+                guard !model.isLoading, !model.normalizedLocations.isEmpty else { return }
+                await model.fetch()
+            }
             .onTapGesture {
                 isLocationFieldFocused = false
             }
@@ -90,8 +95,12 @@ struct ATISHomeView: View {
                         Button("認証情報", systemImage: "person.badge.key") {
                             isShowingCredentials = true
                         }
+
+                        Button("CheckWX API キー", systemImage: "key") {
+                            isShowingCheckWXSettings = true
+                        }
                     }
-                    .accessibilityHint("外観とSWIM WebAPIの認証情報を変更します")
+                    .accessibilityHint("外観、SWIM WebAPI の認証情報、CheckWX API キーを変更します")
                 }
             }
             .preferredColorScheme(appearance.colorScheme)
@@ -109,6 +118,9 @@ struct ATISHomeView: View {
             }
             .sheet(isPresented: $isShowingCredentials) {
                 CredentialsView(model: model, isInitialSetup: false)
+            }
+            .sheet(isPresented: $isShowingCheckWXSettings) {
+                CheckWXSettingsView(model: model)
             }
         }
     }

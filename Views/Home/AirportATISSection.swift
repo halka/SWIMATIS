@@ -11,6 +11,22 @@ struct AirportATISSection: View {
         ATISExport(title: "\(airport) ATIS", messages: messages, fetchedAt: fetchedAt)
     }
 
+    private var firstMessage: ATISMessage? {
+        messages.first
+    }
+
+    private var informationCode: String {
+        guard let firstMessage else { return "—" }
+        if let reportName = firstMessage.source.reportName { return reportName }
+        guard !firstMessage.isClosed else { return "—" }
+        return firstMessage.informationCode ?? "—"
+    }
+
+    private var statusText: String {
+        guard let firstMessage else { return "—" }
+        return firstMessage.isClosed ? "CLOSE" : firstMessage.issueTimeGroup ?? "—"
+    }
+
     var body: some View {
         Section {
             DisclosureGroup(isExpanded: $isExpanded) {
@@ -20,12 +36,12 @@ struct AirportATISSection: View {
                 }
             } label: {
                 HStack(spacing: 10) {
-                    Text(messages.first?.informationCode ?? "—")
-                        .font(.largeTitle.weight(.bold).monospaced())
+                    Text(informationCode)
+                        .font(firstMessage?.source.reportName == nil ? .largeTitle.weight(.bold).monospaced() : .title2.weight(.bold).monospaced())
                         .foregroundStyle(.tint)
                         .frame(minWidth: 44, minHeight: 44)
-                        .accessibilityLabel("ATIS情報コード")
-                        .accessibilityValue(messages.first?.informationCode ?? "不明")
+                        .accessibilityLabel(firstMessage?.source.displayName ?? "ATIS情報コード")
+                        .accessibilityValue(informationCode)
 
                     VStack(alignment: .leading, spacing: 2) {
                         HStack(spacing: 8) {
@@ -33,7 +49,7 @@ struct AirportATISSection: View {
                                 .font(.title.weight(.bold))
                                 .foregroundStyle(.primary)
 
-                            Text(messages.first?.issueTimeGroup ?? "CLOSE")
+                            Text(statusText)
                                 .font(.title2.italic())
                                 .foregroundStyle(.secondary)
                                 .monospacedDigit()
@@ -96,6 +112,12 @@ private struct ATISMessageRow: View {
                 .font(.system(.body, design: .monospaced))
                 .textSelection(.enabled)
                 .fixedSize(horizontal: false, vertical: true)
+
+            if message.source.reportName != nil {
+                Label(message.source.displayName, systemImage: "cloud.sun")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
 
             HStack {
                 Spacer()

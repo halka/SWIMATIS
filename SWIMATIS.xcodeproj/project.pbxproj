@@ -24,7 +24,9 @@
 		2E45466830805AEC001049D3 /* ATISStatusSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4545F5308053B6001049D3 /* ATISStatusSections.swift */; };
 		2E45466930805AEC001049D3 /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4545EB308053B5001049D3 /* KeychainStore.swift */; };
 		2E45466A30805AEC001049D3 /* ATISClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4545E9308053B5001049D3 /* ATISClient.swift */; };
-		2E45466B30805AEC001049D3 /* Assets.xcassets in Sources */ = {isa = PBXBuildFile; fileRef = 2E454659308057DE001049D3 /* Assets.xcassets */; };
+		2E45466B30805AEC001049D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E454659308057DE001049D3 /* Assets.xcassets */; };
+		2EE000013085000100000001 /* CheckWXClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE000023085000100000001 /* CheckWXClient.swift */; };
+		2EE000033085000100000001 /* CheckWXSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE000043085000100000001 /* CheckWXSettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,8 +45,10 @@
 		2E4545F3308053B6001049D3 /* ATISShareMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATISShareMenu.swift; sourceTree = "<group>"; };
 		2E4545F5308053B6001049D3 /* ATISStatusSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATISStatusSections.swift; sourceTree = "<group>"; };
 		2E4545F7308053B6001049D3 /* CredentialsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialsView.swift; sourceTree = "<group>"; };
-		2E454659308057DE001049D3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../../../Users/halka/Documents/GitHub/SWIMATIS/Assets.xcassets; sourceTree = DEVELOPER_DIR; };
-		2EE7325E3086F7DE00E6B5B3 /* SWIMATIS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = SWIMATIS.app; path = /Users/halka/Documents/GitHub/SWIMATIS/build/Debug/SWIMATIS.app; sourceTree = "<absolute>"; };
+		2E454659308057DE001049D3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2EE7325E3086F7DE00E6B5B3 /* SWIMATIS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SWIMATIS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2EE000023085000100000001 /* CheckWXClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckWXClient.swift; sourceTree = "<group>"; };
+		2EE000043085000100000001 /* CheckWXSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckWXSettingsView.swift; sourceTree = "<group>"; };
 		2EF29BF1307CD7C9003FF199 /* AppAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAppearance.swift; sourceTree = "<group>"; };
 		2EF29BFB307CD94E003FF199 /* ATISAppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATISAppModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -91,6 +95,7 @@
 			isa = PBXGroup;
 			children = (
 				2E4545F7308053B6001049D3 /* CredentialsView.swift */,
+				2EE000043085000100000001 /* CheckWXSettingsView.swift */,
 			);
 			path = Credentials;
 			sourceTree = "<group>";
@@ -107,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				2E4545E9308053B5001049D3 /* ATISClient.swift */,
+				2EE000023085000100000001 /* CheckWXClient.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -227,6 +233,7 @@
 		2E454640308056A9001049D3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			files = (
+					2E45466B30805AEC001049D3 /* Assets.xcassets in Resources */,
 			);
 		};
 /* End PBXResourcesBuildPhase section */
@@ -252,7 +259,8 @@
 				2E45466830805AEC001049D3 /* ATISStatusSections.swift in Sources */,
 				2E45466930805AEC001049D3 /* KeychainStore.swift in Sources */,
 				2E45466A30805AEC001049D3 /* ATISClient.swift in Sources */,
-				2E45466B30805AEC001049D3 /* Assets.xcassets in Sources */,
+				2EE000013085000100000001 /* CheckWXClient.swift in Sources */,
+				2EE000033085000100000001 /* CheckWXSettingsView.swift in Sources */,
 			);
 		};
 /* End PBXSourcesBuildPhase section */

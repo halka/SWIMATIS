@@ -21,12 +21,12 @@ struct ATISEmptySection: View {
     var body: some View {
         Section {
             ContentUnavailableView(
-                hasRequested ? "ATIS Not Found" : "Retrive ATIS",
+                hasRequested ? "ATIS Not Found" : "Retrieve ATIS",
                 systemImage: hasRequested ? "antenna.radiowaves.left.and.right.slash" : "airplane.circle",
                 description: Text(
                     hasRequested
-                        ? "Out of Service."
-                        : "Input ICAO 4 Letter Airport Code"
+                        ? "No ATIS is currently available for the requested airports."
+                        : "Enter one or more four-letter ICAO airport codes."
                 )
             )
         }
